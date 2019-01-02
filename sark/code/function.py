@@ -9,6 +9,7 @@ from .xref import Xref
 from ..ui import updates_ui
 from .. import exceptions
 
+from .hx_function import HX_Function
 
 class Comments(object):
     """IDA Function Comments
@@ -164,6 +165,7 @@ class Function(FunctionFlagsMixin):
         self._func = get_func(ea)
         self._comments = Comments(self)
 
+        self._hxfunc = None
     @staticmethod
     def is_function(ea=UseCurrentAddress):
         try:
@@ -376,6 +378,12 @@ class Function(FunctionFlagsMixin):
     def tinfo(self):
         '''The tinfo of the function type'''
         return idc.GetTinfo(self.startEA)
+
+    @property
+    def hexray(self):
+        if not self._hxfunc:
+            self._hxfunc = HX_Function(self.ea)
+        return self._hxfunc
 
     @tinfo.setter
     def tinfo(self, tinfo):

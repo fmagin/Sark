@@ -26,6 +26,10 @@ from . import segment
 
 reload(segment)
 
+from . import hx_function
+
+reload(hx_function)
+
 from .base import *
 from .line import Line, lines
 from .function import Function, functions
